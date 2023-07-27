@@ -1,4 +1,6 @@
 ﻿Imports System.Net.Http
+Imports System.Security.Authentication
+
 Module Module1
     Sub Main()
         Dim url As String = "https://betamq.galileo.edu/gyt/api/pruebaconexion"
@@ -6,8 +8,11 @@ Module Module1
         Dim postData As New Dictionary(Of String, String)()
         ' Codificar los datos para el cuerpo de la solicitud (si es necesario)
         Dim content As New FormUrlEncodedContent(postData)
+        ' Crear un objeto HttpClient usando el HttpClientHandler configurado
+        Dim handler As New HttpClientHandler()
+        handler.SslProtocols = SslProtocols.Tls12
         ' Crear un objeto HttpClient
-        Using httpClient As New HttpClient()
+        Using httpClient As New HttpClient(handler)
             ' Configurar los encabezados
             httpClient.DefaultRequestHeaders.Add("key1", "value1")
             httpClient.DefaultRequestHeaders.Add("key2", "value2")
